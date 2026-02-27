@@ -576,8 +576,9 @@ button:focus-visible {
 }
 
 .skill-icon {
-  font-size: 1.75rem;
-  line-height: 1;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
 }
 
 .skill-name {
