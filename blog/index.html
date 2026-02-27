@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>블로그 — 박성욱</title>
+  <meta name="description" content="박성욱의 기술 블로그. 백엔드 개발, Node.js, MongoDB, 그리고 개발자로서의 생각을 기록합니다." />
+  <meta name="author" content="박성욱 (Park Seonguk)" />
+  <link rel="canonical" href="https://park.seong.uk/blog/" />
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="blog.css" />
+
+  <script>
+    (function () {
+      var stored;
+      try { stored = localStorage.getItem('psu-theme'); } catch (_) {}
+      var system = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', stored || system);
+    })();
+  </script>
+</head>
+
+<body>
+
+  <!-- ── Header ──────────────────────────────────────────────── -->
+  <header class="header" role="banner">
+    <div class="container">
+      <a href="/" class="nav-logo" aria-label="홈으로 이동">
+        박<span>.</span>성욱
+      </a>
+
+      <div class="nav-right">
+        <nav class="nav-links" role="navigation" aria-label="주 내비게이션">
+          <a href="/#about">소개</a>
+          <a href="/#skills">기술</a>
+          <a href="/#projects">프로젝트</a>
+          <a href="/#experience">경력</a>
+          <a href="/blog/" aria-current="page">블로그</a>
+          <a href="/#contact">연락</a>
+        </nav>
+
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          aria-label="다크 모드로 전환"
+          title="테마 전환"
+        >
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+
+        <button
+          id="hamburger"
+          class="hamburger"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          aria-label="메뉴 열기"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Mobile Nav ───────────────────────────────────────────── -->
+  <nav id="mobile-nav" class="mobile-nav" role="navigation" aria-label="모바일 내비게이션">
+    <a href="/#about">소개</a>
+    <a href="/#skills">기술</a>
+    <a href="/#projects">프로젝트</a>
+    <a href="/#experience">경력</a>
+    <a href="/blog/" aria-current="page">블로그</a>
+    <a href="/#contact">연락</a>
+  </nav>
+
+  <main id="main-content">
+
+    <!-- ── Blog Hero ─────────────────────────────────────────────── -->
+    <section class="blog-hero" aria-labelledby="blog-title">
+      <div class="container">
+        <p class="section-label">Blog</p>
+        <h1 id="blog-title" class="section-title">개발 일기</h1>
+        <p class="blog-subtitle">
+          백엔드 개발, 기술적 고민, 그리고 개발자로서의 생각을 기록합니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── Posts ─────────────────────────────────────────────────── -->
+    <section class="blog-posts" aria-label="블로그 글 목록">
+      <div class="container">
+
+        <article class="blog-card" aria-labelledby="post1-title">
+          <div class="blog-card-meta">
+            <time datetime="2026-02-27">2026.02.27</time>
+            <span class="blog-card-tag">인프라</span>
+          </div>
+          <h2 id="post1-title" class="blog-card-title">커스텀 도메인 이메일 서비스 구축기</h2>
+          <p class="blog-card-excerpt">
+            AWS SES, Lambda, S3를 활용해 park.seong.uk 도메인으로 이메일 수발신 시스템을 구축한 과정을 정리합니다.
+            GoDaddy DNS 설정부터 Gmail 연동까지, 삽질과 해결의 기록.
+          </p>
+          <div class="blog-card-tags">
+            <span class="tag">AWS SES</span>
+            <span class="tag">Lambda</span>
+            <span class="tag">DNS</span>
+          </div>
+        </article>
+
+        <article class="blog-card" aria-labelledby="post2-title">
+          <div class="blog-card-meta">
+            <time datetime="2026-02-27">2026.02.27</time>
+            <span class="blog-card-tag">회고</span>
+          </div>
+          <h2 id="post2-title" class="blog-card-title">GitHub Pages로 포트폴리오 사이트 만들기</h2>
+          <p class="blog-card-excerpt">
+            프레임워크 없이 순수 HTML, CSS, JavaScript만으로 개인 포트폴리오 사이트를 만든 이야기.
+            다크모드, 반응형 디자인, SEO 최적화까지 바닐라로 구현하기.
+          </p>
+          <div class="blog-card-tags">
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">GitHub Pages</span>
+            <span class="tag">Vanilla JS</span>
+          </div>
+        </article>
+
+        <!-- Empty state for future -->
+        <div class="blog-empty-hint">
+          <p>더 많은 글이 곧 올라올 예정입니다.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ────────────────────────────────────────────────── -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p class="footer-copy">
+        &copy; 2026 박성욱. All rights reserved.
+      </p>
+      <div class="footer-links">
+        <a href="/blog/" aria-label="블로그">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+          </svg>
+          Blog
+        </a>
+        <a href="mailto:developer@park.seong.uk" aria-label="이메일 보내기">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect width="20" height="16" x="2" y="4" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+          Email
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

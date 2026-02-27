@@ -1,0 +1,105 @@
+/* =============================================================
+   blog.css — Blog-specific styles
+   ============================================================= */
+
+.blog-hero {
+  padding-top: calc(var(--header-height) + var(--space-3xl));
+  padding-bottom: var(--space-xl);
+}
+
+.blog-subtitle {
+  font-size: 1.0625rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  max-width: 480px;
+}
+
+/* ── Blog Posts ─────────────────────────────────────────────── */
+.blog-posts {
+  padding-bottom: var(--space-3xl);
+}
+
+.blog-card {
+  padding: var(--space-xl);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  margin-bottom: var(--space-lg);
+  background-color: var(--bg-surface);
+  transition: border-color var(--duration) var(--ease),
+              transform var(--duration) var(--ease),
+              background-color var(--duration) var(--ease);
+}
+
+.blog-card:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+  background-color: var(--bg-elevated);
+}
+
+.blog-card-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.blog-card-meta time {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-subtle);
+  letter-spacing: 0.04em;
+}
+
+.blog-card-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background-color: var(--accent-dim);
+  color: var(--accent);
+}
+
+.blog-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-sm);
+  line-height: 1.4;
+}
+
+.blog-card-excerpt {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin-bottom: var(--space-md);
+}
+
+.blog-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+/* ── Empty Hint ────────────────────────────────────────────── */
+.blog-empty-hint {
+  text-align: center;
+  padding: var(--space-xl);
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  margin-top: var(--space-md);
+}
+
+/* ── Active nav link ───────────────────────────────────────── */
+.nav-links a[aria-current="page"] {
+  color: var(--text);
+}
+
+.mobile-nav a[aria-current="page"] {
+  color: var(--accent);
+}

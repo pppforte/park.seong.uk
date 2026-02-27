@@ -527,7 +527,7 @@ button:focus-visible {
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: var(--space-md);
 }
 
@@ -589,6 +589,7 @@ button:focus-visible {
   flex-direction: column;
   background-color: var(--bg-surface);
   border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
   border-radius: 16px;
   overflow: hidden;
   transition: border-color var(--duration) var(--ease),
@@ -598,12 +599,12 @@ button:focus-visible {
 
 .project-card:hover {
   border-color: var(--accent);
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 [data-theme="light"] .project-card:hover {
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .project-image {
@@ -647,6 +648,18 @@ button:focus-visible {
   border-radius: 4px;
   background-color: var(--accent-dim);
   color: var(--accent);
+}
+
+.timeline-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background-color: var(--accent-dim);
+  color: var(--accent);
+  margin-bottom: var(--space-sm);
 }
 
 .project-title {
@@ -876,10 +889,6 @@ button:focus-visible {
     align-items: start;
   }
 
-  .projects-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .footer .container {
     flex-direction: row;
     justify-content: space-between;
@@ -890,7 +899,7 @@ button:focus-visible {
 /* ── 1024px breakpoint ───────────────────────────────────────── */
 @media (min-width: 1024px) {
   .projects-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .skills-grid {
