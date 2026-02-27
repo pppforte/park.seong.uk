@@ -395,9 +395,14 @@ button:focus-visible {
 .hero-title {
   font-size: clamp(1.125rem, 3vw, 1.5rem);
   font-weight: 500;
-  color: var(--accent);
+  color: var(--text-muted);
   margin-bottom: var(--space-lg);
   letter-spacing: -0.01em;
+}
+
+.hero-highlight {
+  color: var(--accent);
+  font-weight: 700;
 }
 
 .hero-tagline {
