@@ -484,6 +484,25 @@ button:focus-visible {
   gap: var(--space-2xl);
 }
 
+.about-photo {
+  display: flex;
+  justify-content: center;
+}
+
+.about-photo img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 3px solid var(--border);
+  transition: border-color var(--duration) var(--ease);
+}
+
+.about-photo img:hover {
+  border-color: var(--accent);
+}
+
 .about-bio {
   font-size: 1.0625rem;
   color: var(--text-muted);
@@ -889,8 +908,13 @@ button:focus-visible {
     display: flex;
   }
 
+  .about-photo img {
+    width: 220px;
+    height: 220px;
+  }
+
   .about-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto 1fr 1fr;
     align-items: start;
   }
 
