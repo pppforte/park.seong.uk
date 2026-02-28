@@ -20,9 +20,11 @@
   var btnLogout = document.getElementById('mail-logout-btn');
   var btnDetailBack = document.getElementById('mail-back-btn');
   var btnReply = document.getElementById('mail-reply-btn');
+  var btnForward = document.getElementById('mail-forward-btn');
 
   var currentFolder = 'inbox';
   var currentEmail = null;
+  var composeReplyTo = null; // Track reply context separately
 
   // ── Helpers ──────────────────────────────────────────────
   function getToken() {
@@ -120,17 +122,20 @@
   function showCompose(prefill) {
     composeOverlay.style.display = '';
     composeError.textContent = '';
+    var titleEl = document.getElementById('compose-title');
     var toField = document.getElementById('compose-to');
     var ccField = document.getElementById('compose-cc');
     var subjectField = document.getElementById('compose-subject');
     var bodyField = document.getElementById('compose-body');
 
     if (prefill) {
+      titleEl.textContent = prefill.title || '새 메일 작성';
       toField.value = prefill.to || '';
       ccField.value = prefill.cc || '';
       subjectField.value = prefill.subject || '';
       bodyField.value = prefill.body || '';
     } else {
+      titleEl.textContent = '새 메일 작성';
       toField.value = '';
       ccField.value = '';
       subjectField.value = '';
@@ -141,6 +146,7 @@
 
   function hideCompose() {
     composeOverlay.style.display = 'none';
+    composeReplyTo = null;
   }
 
   // ── Login ──────────────────────────────────────────────────
@@ -223,7 +229,8 @@
     if (bodyEl) bodyEl.innerHTML = '<div class="mail-loading">메일을 불러오는 중...</div>';
 
     try {
-      var email = await apiFetch('/' + id);
+      // Use query parameter to avoid URL path encoding issues with S3 keys
+      var email = await apiFetch('/read?id=' + id);
       currentEmail = email;
       renderEmailDetail(email);
     } catch (err) {
@@ -234,7 +241,6 @@
   }
 
   function renderEmailDetail(email) {
-    // Fill in the structured HTML detail elements
     var subjectEl = document.getElementById('mail-detail-subject');
     var fromEl = document.getElementById('mail-detail-from');
     var toEl = document.getElementById('mail-detail-to');
@@ -263,7 +269,6 @@
     if (email.htmlBody && iframe) {
       iframe.style.display = '';
       iframe.srcdoc = email.htmlBody;
-      // Auto-resize iframe after load
       iframe.onload = function () {
         try {
           var h = iframe.contentDocument.documentElement.scrollHeight;
@@ -274,7 +279,6 @@
       iframe.style.display = 'none';
     }
 
-    // If no HTML body, show text body below iframe area
     if (!email.htmlBody && bodyEl) {
       var textPre = bodyEl.querySelector('.mail-text-body');
       if (!textPre) {
@@ -313,8 +317,9 @@
     e.preventDefault();
     composeError.textContent = '';
     var btn = composeForm.querySelector('button[type="submit"]');
+    var btnText = btn.querySelector('.btn-text');
     btn.disabled = true;
-    btn.textContent = '전송 중...';
+    if (btnText) btnText.textContent = '전송 중...';
 
     var payload = {
       to: document.getElementById('compose-to').value.trim(),
@@ -323,8 +328,8 @@
       body: document.getElementById('compose-body').value.trim(),
     };
 
-    if (currentEmail && currentEmail.id) {
-      payload.inReplyTo = currentEmail.id;
+    if (composeReplyTo) {
+      payload.inReplyTo = composeReplyTo;
     }
 
     try {
@@ -333,7 +338,7 @@
         body: JSON.stringify(payload),
       });
       hideCompose();
-      currentEmail = null;
+      composeReplyTo = null;
       if (currentFolder === 'sent') {
         loadInbox();
       }
@@ -341,7 +346,7 @@
       composeError.textContent = err.message || '전송에 실패했습니다.';
     } finally {
       btn.disabled = false;
-      btn.textContent = '전송';
+      if (btnText) btnText.textContent = '보내기';
     }
   });
 
@@ -365,7 +370,7 @@
 
   // Compose
   btnCompose.addEventListener('click', function () {
-    currentEmail = null;
+    composeReplyTo = null;
     showCompose();
   });
 
@@ -417,13 +422,42 @@
       'Date: ' + formatFullDate(currentEmail.date) + '\n\n' +
       (currentEmail.textBody || '').split('\n').map(function (line) { return '> ' + line; }).join('\n');
 
+    composeReplyTo = currentEmail.id || null;
     showCompose({
+      title: '답장',
       to: currentEmail.from,
       cc: '',
       subject: replySubject,
       body: quotedBody,
     });
   });
+
+  // Forward
+  if (btnForward) {
+    btnForward.addEventListener('click', function () {
+      if (!currentEmail) return;
+      var fwdSubject = currentEmail.subject || '';
+      if (!/^Fwd:/i.test(fwdSubject)) {
+        fwdSubject = 'Fwd: ' + fwdSubject;
+      }
+
+      var fwdBody = '\n\n---------- Forwarded message ----------\n' +
+        'From: ' + (currentEmail.fromName || currentEmail.from) + '\n' +
+        'Date: ' + formatFullDate(currentEmail.date) + '\n' +
+        'Subject: ' + (currentEmail.subject || '') + '\n' +
+        'To: ' + (currentEmail.to || []).map(function (a) { return a.name ? a.name + ' <' + a.address + '>' : a.address; }).join(', ') + '\n\n' +
+        (currentEmail.textBody || '');
+
+      composeReplyTo = null;
+      showCompose({
+        title: '전달',
+        to: '',
+        cc: '',
+        subject: fwdSubject,
+        body: fwdBody,
+      });
+    });
+  }
 
   // Keyboard shortcut: Escape to close compose
   document.addEventListener('keydown', function (e) {
