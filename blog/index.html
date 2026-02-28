@@ -97,49 +97,27 @@
       </div>
     </section>
 
-    <!-- ── Posts ─────────────────────────────────────────────────── -->
-    <section class="blog-posts" aria-label="블로그 글 목록">
+    <!-- ── Posts List (dynamic) ───────────────────────────────────── -->
+    <section id="blog-list" class="blog-posts" aria-label="블로그 글 목록">
       <div class="container">
-
-        <article class="blog-card" aria-labelledby="post1-title">
-          <div class="blog-card-meta">
-            <time datetime="2026-02-27">2026.02.27</time>
-            <span class="blog-card-tag">인프라</span>
-          </div>
-          <h2 id="post1-title" class="blog-card-title">커스텀 도메인 이메일 서비스 구축기</h2>
-          <p class="blog-card-excerpt">
-            AWS SES, Lambda, S3를 활용해 park.seong.uk 도메인으로 이메일 수발신 시스템을 구축한 과정을 정리합니다.
-            GoDaddy DNS 설정부터 Gmail 연동까지, 삽질과 해결의 기록.
-          </p>
-          <div class="blog-card-tags">
-            <span class="tag">AWS SES</span>
-            <span class="tag">Lambda</span>
-            <span class="tag">DNS</span>
-          </div>
-        </article>
-
-        <article class="blog-card" aria-labelledby="post2-title">
-          <div class="blog-card-meta">
-            <time datetime="2026-02-27">2026.02.27</time>
-            <span class="blog-card-tag">회고</span>
-          </div>
-          <h2 id="post2-title" class="blog-card-title">GitHub Pages로 포트폴리오 사이트 만들기</h2>
-          <p class="blog-card-excerpt">
-            프레임워크 없이 순수 HTML, CSS, JavaScript만으로 개인 포트폴리오 사이트를 만든 이야기.
-            다크모드, 반응형 디자인, SEO 최적화까지 바닐라로 구현하기.
-          </p>
-          <div class="blog-card-tags">
-            <span class="tag">HTML/CSS</span>
-            <span class="tag">GitHub Pages</span>
-            <span class="tag">Vanilla JS</span>
-          </div>
-        </article>
-
-        <!-- Empty state for future -->
-        <div class="blog-empty-hint">
-          <p>더 많은 글이 곧 올라올 예정입니다.</p>
+        <div id="posts-container">
+          <div class="blog-loading">글을 불러오는 중...</div>
         </div>
+      </div>
+    </section>
 
+    <!-- ── Post Detail (hidden by default) ────────────────────────── -->
+    <section id="blog-detail" class="blog-detail" aria-label="블로그 글 상세" style="display:none;">
+      <div class="container">
+        <button id="blog-back" class="blog-back-btn" aria-label="목록으로 돌아가기">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true" width="16" height="16">
+            <path d="m15 18-6-6 6-6"/>
+          </svg>
+          목록으로
+        </button>
+        <article id="post-content" class="blog-post-full"></article>
       </div>
     </section>
 
@@ -172,5 +150,6 @@
   </footer>
 
   <script src="../script.js"></script>
+  <script src="blog.js"></script>
 </body>
 </html>
