@@ -223,19 +223,33 @@
     showDetail();
     var subjectEl = document.getElementById('mail-detail-subject');
     var fromEl = document.getElementById('mail-detail-from');
+    var iframe = document.getElementById('mail-detail-iframe');
     var bodyEl = mailDetail.querySelector('.mail-detail-body');
     subjectEl.textContent = '';
     fromEl.textContent = '불러오는 중...';
-    if (bodyEl) bodyEl.innerHTML = '<div class="mail-loading">메일을 불러오는 중...</div>';
+    // Hide iframe and text body, show loading indicator without destroying iframe
+    if (iframe) iframe.style.display = 'none';
+    var existingPre = bodyEl ? bodyEl.querySelector('.mail-text-body') : null;
+    if (existingPre) existingPre.style.display = 'none';
+    // Add or reuse loading indicator
+    var loadingEl = bodyEl ? bodyEl.querySelector('.mail-loading') : null;
+    if (!loadingEl && bodyEl) {
+      loadingEl = document.createElement('div');
+      loadingEl.className = 'mail-loading';
+      loadingEl.textContent = '메일을 불러오는 중...';
+      bodyEl.appendChild(loadingEl);
+    }
+    if (loadingEl) loadingEl.style.display = '';
 
     try {
-      // Use query parameter to avoid URL path encoding issues with S3 keys
       var email = await apiFetch('/read?id=' + id);
       currentEmail = email;
+      if (loadingEl) loadingEl.style.display = 'none';
       renderEmailDetail(email);
     } catch (err) {
-      if (err.message !== 'Unauthorized') {
-        if (bodyEl) bodyEl.innerHTML = '<div class="mail-empty">메일을 불러오지 못했습니다.</div>';
+      if (loadingEl) loadingEl.textContent = '메일을 불러오지 못했습니다.';
+      if (err.message === 'Unauthorized') {
+        if (loadingEl) loadingEl.style.display = 'none';
       }
     }
   }
