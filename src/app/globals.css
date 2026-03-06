@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+/* ── Theme CSS Variables ─────────────────────────────────── */
+:root {
+  /* Dark theme (default) */
+  --bg: #0a0a0a;
+  --bg-surface: #111111;
+  --bg-elevated: #1a1a1a;
+  --border: #222222;
+  --text: #e5e5e5;
+  --text-muted: #737373;
+  --text-subtle: #525252;
+  --accent: #3b82f6;
+  --accent-dim: rgba(59, 130, 246, 0.12);
+  --accent-hover: #60a5fa;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans KR", sans-serif;
+  --font-mono: "SF Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+  --header-height: 64px;
+  --max-width: 1100px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration: 200ms;
+}
+
+[data-theme="light"] {
+  --bg: #ffffff;
+  --bg-surface: #f8f8f8;
+  --bg-elevated: #f0f0f0;
+  --border: #e0e0e0;
+  --text: #111111;
+  --text-muted: #555555;
+  --text-subtle: #888888;
+  --accent: #2563eb;
+  --accent-dim: rgba(37, 99, 235, 0.08);
+  --accent-hover: #1d4ed8;
+}
+
+/* ── Tailwind v4 Theme Mapping ──────────────────────────── */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--bg-surface);
+  --color-elevated: var(--bg-elevated);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-subtle: var(--text-subtle);
+  --color-accent: var(--accent);
+  --color-accent-dim: var(--accent-dim);
+  --color-accent-hover: var(--accent-hover);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+/* ── Base Reset ──────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text);
+  background-color: var(--bg);
+  transition: background-color var(--duration) var(--ease),
+    color var(--duration) var(--ease);
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--duration) var(--ease);
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ── Skill bar dark mode Express icon inversion ──────────── */
+[data-theme="dark"] .skill-icon-invert {
+  filter: invert(1);
+}
+
+/* ── Blog Post Body ─────────────────────────────────────── */
+.blog-post-body h2 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.blog-post-body h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.blog-post-body p {
+  margin-bottom: 1rem;
+}
+
+.blog-post-body strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.blog-post-body ul,
+.blog-post-body ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.blog-post-body li {
+  margin-bottom: 0.25rem;
+  list-style: disc;
+}
+
+.blog-post-body code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 2px 6px;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--accent);
+}
+
+.blog-post-body pre {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+.blog-post-body pre code {
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+/* ── Reduced Motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── Print ───────────────────────────────────────────────── */
+@media print {
+  body {
+    color: #000;
+    background: #fff;
+  }
+}
